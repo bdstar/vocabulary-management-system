@@ -1,0 +1,106 @@
+<!--
+- id [id]
+- word <input text> [word]
+- part-of-speech <dropdown> [pos]
+- spelling <input text> [spelling]
+- utterance <input text> [utterance]
+- mnemonics <input text> [mnemonics]
+- short meaning <input text> [smeaning]
+- long meaning <textbox> [lmeaning]
+- sentence <textbox> [sentence]
+- picture <File uploa> [picture]
+- meaning_number(default 1)<dropdown> [meaning_number]
+- tag <searchable multi-select dropdown>
+- synonyms <searchable multi-select dropdown>
+- antonyms <searchable multi-select dropdown>
+
+https://stackoverflow.com/questions/50895806/bootstrap-4-multiselect-dropdown
+-->
+
+              <!--<option selected>-- Select Parts of Speech --</option>
+              <option value="Noun">Noun</option>
+              <option value="Pronoun">Pronoun</option>
+              <option value="Adjective">Adjective</option>
+              <option value="Verb">Verb</option>
+              <option value="Adverb">Adverb</option>
+              <option value="Preposition">Preposition</option>
+              <option value="Conjunction">Conjunction</option>
+              <option value="Interjection">Interjection</option>-->
+
+
+
+  /*
+  Array
+  (
+    [0] => Array
+      (
+        [id] => 1
+        [word] => Good
+        [pos] => Noun
+        [spelling] => g-oo-d
+        [utterance] => gud
+        [mnemonics] => 
+        [smeaning] => ভাল
+        [lmeaning] => that which is morally right; righteousness.
+        [sentence] => a mysterious balance of good and evil
+        [picture] => 
+        [meaning_number] => 1
+        [past] => 
+        [participle] => 
+        [complete] => 0
+        [created_at] => 2021-09-09 22:57:12
+        [updated_at] => 2021-09-09 22:57:12
+      )
+  )
+  */
+
+
+
+
+	// if(isset($_GET['page'])){$page=$_GET['page'];}
+	// if(isset($_GET['action'])){$action=$_GET['action'];}
+	// if(isset($_POST['name'])){$name = $_POST['name'];}
+	//if(isset($_POST['description'])){$description=$_POST['description'];}
+
+
+
+
+
+		/*if (isset($_POST['name']) && empty($_POST["name"])) {
+			$errorMSG .= "<li>Name is required</<li>"; 
+			$name_validation = false;
+		}
+		else{
+			if(!preg_match("/^[a-zA-Z]([\w -]*[a-zA-Z])?$/i", $_POST["name"])){
+				$errorMSG .= "<li>Name only allow alphanumeric, hyphen, underscore and space</<li>"; 
+				$name_validation = false;
+			}
+			else {
+				if(strlen($_POST["name"])>100){
+					$errorMSG .= "<li>Name must be less than 100 characters</<li>"; 
+					$name_validation = false;
+				}
+				else {
+					$name = $_POST['name'];
+					$name_validation = true;
+				}
+			}
+		}*/
+		
+		/*if (isset($_POST['description']) && empty($_POST["description"])) {
+			$errorMSG .= "<li>Description is required</<li>"; 
+			$description_validation = false;
+		}else{
+			if(!preg_match('/^[a-zA-Z]([\w -]*[a-zA-Z])?$/i', $_POST["description"])){
+				$errorMSG .= "<li>Description Only allow alphanumeric, hyphen, underscore and space string</<li>"; 
+				$description_validation = false;
+			}else{
+				if(strlen($_POST["description"])>200){
+					$errorMSG .= "<li>Description string must be less than 200 characters</<li>"; 
+					$description_validation = false;
+				}else {
+					$description = $_POST['description'];
+					$description_validation = true;
+				}
+			}
+		}*/

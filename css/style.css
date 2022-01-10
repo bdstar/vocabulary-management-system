@@ -1,0 +1,51 @@
+.fakeimg {
+    height: 200px;
+    background: #aaa;
+}
+#operation-result{
+    display: none;
+}
+.alert strong{
+    text-transform: uppercase;
+}
+.swal2-actions button{
+    margin-right: 10px;
+}
+
+
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #e9ecef;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;    
+}
+.input-file-name{
+    background-color: white !important;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white !important;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 50%;
+}

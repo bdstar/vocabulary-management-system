@@ -32,7 +32,7 @@
                             <td class="pull-right">
                                 <a href="save-tag.php?action=update&id='.$tag['id'].'" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 <a href="save-tag.php?action=view&id='.$tag['id'].'" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <a id="delete-tag" data-id="'.$tag['id'].'" onclick="deleteData('.$tag['id'].')" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                <a id="delete-tag" data-id="'.$tag['id'].'" onclick="deleteData('.$tag['id'].',"tag")" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     ';

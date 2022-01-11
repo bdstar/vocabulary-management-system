@@ -28,9 +28,14 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
       <div id="operation-result" class="alert">
       </div>
     </div>
-
+<!--
+  id
+  name
+  slug
+  description
+-->
     <div class="col-sm-8">
-      <form id="save-tag" data-type="<?php echo $page_type ?>" class="needs-validation" novalidate>
+      <form id="save-form" data-page="tag" data-type="<?php echo $page_type ?>" class="needs-validation" novalidate>
 
         <?php if($page_type=="Update"){ ?>
           <input type="hidden" id="id" name="id" value="<?php echo isset($id_value) ? $id_value : ""; ?>">
@@ -39,7 +44,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Name: </label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" placeholder="Enter Tag Name" name="name" maxlength="100" value="<?php echo isset($name_value) ? $name_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="name" placeholder="Enter Tag Name" name="name" maxlength="100" value="<?php echo isset($name_value) ? $name_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -49,7 +54,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
           <label for="description" class="col-sm-2 col-form-label">Description: </label>
           <div class="col-sm-10">
             <!--<input type="text" class="form-control" id="description" placeholder="Enter description" maxlength="200" name="description" value="<?php //echo isset($description_value) ? $description_value : ""; ?>" required>-->
-            <textarea name="description" id="description" class="form-control" cols="30" rows="10" maxlength="200" required><?php echo isset($description_value) ? $description_value : ""; ?></textarea>
+            <textarea name="description" id="description" class="form-control input-field" cols="30" rows="10" maxlength="200" required><?php echo isset($description_value) ? $description_value : ""; ?></textarea>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>

@@ -2,8 +2,10 @@
 class Database{
 
 	public $hostname = "localhost";
-	public $username = "root";
-	public $passowrd = "";
+	//public $username = "root";
+	public $username = "pmauser";
+	//public $passowrd = "";
+	public $passowrd = "123456";
 	public $database = "vocabulary";
 	public $connection;
 	public $message = array(); 
@@ -196,7 +198,27 @@ class Database{
 		return $validation_result;
 	}
 
+	public function TagValidation($POST){
+		$name_validation = $description_validation = false;
+		$validation = false;
+		$errorMSG = "";
 
+		/*------ Start: Check Validation --------*/
+		$name_validation_check = $obj->validation("Name", $POST["name"], 100);
+		$errorMSG .= $name_validation_check["errorMSG"];
+		$name_validation = $name_validation_check["validation"];
+		if($name_validation){$name = $POST['name'];}
+
+		$description_validation_check = $obj->validation("Description", $POST["description"], 200);
+		$errorMSG .= $description_validation_check["errorMSG"];
+		$description_validation = $description_validation_check["validation"];
+		if($description_validation){$description=$POST['description'];}
+		/*------ End: Check Validation --------*/
+
+		if($name_validation && $description_validation) $validation = true;
+		$validation_result = array("errorMSG" => $errorMSG, "validation" => $validation);
+		return $validation_result;
+	}
 
 	//Call destructor function 
 	public function __destruct() {
@@ -218,8 +240,61 @@ echo "<pre>"; print_r($_GET); die;
 
 
 if(isset($_GET["page"])){
+
+	/* ======= START: Insert and Update Operation ======== */
+	if(($_GET["page"]=="tag" || $_GET["page"]=="words") && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
+		// extract($_POST);
+
+		if (isset($_GET['page']) && isset($_GET['action'])) {
+			$page=$_GET['page'];
+			$action=$_GET['action'];
+
+			if ($page == 'tag') {
+				$result_validation = TagValidation($_POST);
+			}elseif ($page == 'words') {
+				$result_validation = WordsValidation($_POST);
+			}
+		} else {
+			$data_result ="failed";
+			$data_msg = "There is no PAGE and ACTION";
+			$data_message = "Illegal Operator";
+			echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]); exit;
+		}
+
+		if($result_validation['validation']){
+			$slug = $name;
+			$tablename = $page;
+			$ColumnVal = array("name"=>$name,"slug"=>$slug,"description"=>$description);
+
+			if($action=="update"){
+				$condition = array("id"=>$_POST['id']);
+				$dbreturn = $obj->update($tablename, $ColumnVal, $condition);
+			}else{
+				$dbreturn = $obj->insert($tablename, $ColumnVal);
+			}
+
+			if($dbreturn["return"]){
+				$data_result = "success";
+				$data_msg = $dbreturn['msg'];
+				$data_message = $page." Successfully ".$action;
+			}else{
+				$data_result ="failed";
+				$data_msg = $dbreturn['msg'];
+				$data_message = $page." unable to ".$action;
+			}
+		}else{
+			$data_result ="failed";
+			$data_msg = "<ul>".$errorMSG."</ul>";
+			$data_message = $page." unable to ".$action;
+		}
+		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]);
+	}
+	/* ======= END: Insert and Update Tag ======== */
+
+
+
 	/* ======= START: Insert and Update Tag ======== */
-	if($_GET["page"]=="tag" && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
+	/*if($_GET["page"]=="tag" && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
 		$name_validation = $description_validation = false;
 		$errorMSG = "";
 
@@ -270,19 +345,19 @@ if(isset($_GET["page"])){
 			$data_message = $page." unable to ".$action;
 		}
 		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]);
-	}
+	}*/
 	/* ======= END: Insert and Update Tag ======== */
 
 
 
 
 	/* ======= START: Delete Tag ======== */
-	if($_GET["page"]=="tag" && $_GET["action"]=="delete") {
+	if(($_GET["page"]=="tag" || $_GET["page"]=="words") && $_GET["action"]=="delete") {
 		$page=$_GET['page'];
 		$action=$_GET['action'];
 		$id=$_GET['id'];
 
-		$tablename = "tag";
+		$tablename = $page;
 		$DelColumnVal = array("id"=>$id);
 		$dbreturn = $obj->delete($tablename, $DelColumnVal);
 

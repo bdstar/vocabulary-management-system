@@ -40,7 +40,7 @@
                             <td class="pull-right">
                                 <a href="save-word.php?action=update&id='.$word['id'].'" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 <a href="save-word.php?action=view&id='.$word['id'].'" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <a id="delete-word" data-id="'.$word['id'].'" onclick="deleteData('.$word['id'].')" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                <a id="delete-word" data-id="'.$word['id'].'" onclick="deleteData('.$word['id'].', "words")" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                             </td>
                             <td>'.$word['pos'].'</td>
                         </tr>';

@@ -34,10 +34,11 @@ $(document).ready(function() {
 /*https://www.itsolutionstuff.com/post/simple-php-ajax-form-validation-example-from-scratchexample.html*/
 
   $(function () {
-    $('#save-tag').on('submit', function (e) {
+    $('#save-form').on('submit', function (e) {
       e.preventDefault();
       var type = $(this).data("type");
-      var url = (type=="Update") ? 'database.php?page=tag&action=update' : 'database.php?page=tag&action=insert';
+      var page = $(this).data("page");
+      var url = (type == "Update") ? 'database.php?page=' + page + '&action=update' : 'database.php?page=' + page +'&action=insert';
       $.ajax({
         type: 'post',
         dataType: "json",
@@ -59,9 +60,10 @@ $(document).ready(function() {
           }
 
           if(type=="Add"){
-            $("#save-tag").removeClass("was-validated");
-            $('#name').val("");
-            $('#description').val("");
+            $("#save-form").removeClass("was-validated");
+            $('.input-field').val("");
+            /*$('#name').val("");
+            $('#description').val("");*/
           }
         },
         fail: function(xhr, textStatus, errorThrown){
@@ -80,8 +82,8 @@ $(document).ready(function() {
 
  
 
-function deleteData(id) {
-  console.log("Delete id: ",id);
+function deleteData(id,page) {
+  //console.log("Delete id: ",id);
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
@@ -99,7 +101,7 @@ function deleteData(id) {
     cancelButtonText: 'No, cancel!',
     reverseButtons: true,
     preConfirm: (login) => {
-      return fetch('database.php?page=tag&action=delete&id='+id)
+      return fetch('database.php?page='+page+'&action=delete&id='+id)
         .then(response => {
           if (!response.ok) {
             throw new Error(response.statusText)

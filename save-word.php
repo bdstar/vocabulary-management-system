@@ -51,9 +51,26 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
       <div id="operation-result" class="alert">
       </div>
     </div>
-
+<!--
+ID                Name                  Table
+-----------------------------------------------------
+id                id                    id
+word              word                  word
+word-past         past                  past
+word-participle   participle            participle
+pos               pos                   pos
+spelling          spelling              spelling
+utterance         utterance             utterance
+mnemonics         mnemonics             mnemonics
+smeaning          smeaning              smeaning
+lmeaning          lmeaning              lmeaning
+sentence          sentence              sentence
+meaning-number    meaning_number        meaning_number
+complete          complete              complete
+                                        picture
+-->
     <div class="col-sm-8">
-      <form id="save-word" data-type="<?php echo $page_type ?>" class="needs-validation" novalidate>
+      <form id="save-form" data-page="words" data-type="<?php echo $page_type ?>" class="needs-validation" novalidate>
 
         <?php if($page_type=="Update"){ ?>
           <input type="hidden" id="id" name="id" value="<?php echo isset($id_value) ? $id_value : ""; ?>">
@@ -71,7 +88,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
         <div class="form-group row">
           <label for="word" class="col-sm-3 col-form-label">Word(Past Form): </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="word-past" placeholder="Enter Past Form" name="word-past" maxlength="100" value="<?php echo isset($word_past_value) ? $word_past_value : ""; ?>" required>
+            <input type="text" class="form-control" id="past" placeholder="Enter Past Form" name="past" maxlength="100" value="<?php echo isset($word_past_value) ? $word_past_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -80,7 +97,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
         <div class="form-group row">
           <label for="word" class="col-sm-3 col-form-label">Word(Past participle Form): </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="word-participle" placeholder="Enter past participle Form" name="word-past" maxlength="100" value="<?php echo isset($word_participle_value) ? $word_participle_value : ""; ?>" required>
+            <input type="text" class="form-control" id="participle" placeholder="Enter past participle Form" name="participle" maxlength="100" value="<?php echo isset($word_participle_value) ? $word_participle_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -89,7 +106,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
         <div class="form-group row">
           <label for="pos" class="col-sm-3 col-form-label">Parts of Speech: </label>
           <div class="col-sm-9">
-            <select class="form-select form-control" id="pos" aria-label="Default select example">
+            <select class="form-select form-control" id="pos" name="pos" aria-label="Default select example">
               <?php 
               foreach ($pos as $key => $value) {
                 if($pos_value == $value)
@@ -158,6 +175,14 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
           </div>
         </div>
 
+
+        <div class="form-group row">
+          <label for="sentence" class="col-sm-3 col-form-label">Is Complete?: </label>
+          <div class="col-sm-9">
+            <input type="checkbox" class="form-check-input" id="complete" name="complete">
+          </div>
+        </div>
+
         <!--<div class="form-group row">
           <label for="picture" class="col-sm-2 col-form-label">Picture: </label>
           <div class="col-sm-10 custom-file">
@@ -187,7 +212,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
         <div class="form-group row">
           <label for="meaning_number" class="col-sm-3 col-form-label">Number'th Meaning: </label>
           <div class="col-sm-9">
-            <select class="form-select form-control" id="meaning_number" aria-label="Default select example">
+            <select class="form-select form-control" id="meaning-number" name="meaning_number" aria-label="Default select example">
               <?php 
               for ($i=1; $i<5  ; $i++) { 
                 if ($i==$meaning_number)

@@ -2,10 +2,10 @@
 class Database{
 
 	public $hostname = "localhost";
-	//public $username = "root";
-	public $username = "pmauser";
-	//public $passowrd = "";
-	public $passowrd = "123456";
+	public $username = "root";
+	//public $username = "pmauser";
+	public $passowrd = "";
+	//public $passowrd = "123456";
 	public $database = "vocabulary";
 	public $connection;
 	public $message = array(); 
@@ -160,7 +160,7 @@ class Database{
 				return $this->message;
 			}
 			else{
-				$this->message['msg'] =  "The Record you want to updated is no loger exists";
+				$this->message['msg'] =  "The Record you want to updated is no loger exists or It is already updated";
 				$this->message['return'] = false;
 				return $this->message;
 			}
@@ -173,6 +173,7 @@ class Database{
 
 
 	public function validation($fieldname, $fieldvalue, $fieldlength){
+		$fieldvalue = trim($fieldvalue);
 		$errorMSG = "";
 		if (isset($fieldvalue) && empty($fieldvalue)) {
 			$errorMSG .= "<li>".$fieldname." is required</<li>"; 
@@ -204,18 +205,35 @@ class Database{
 		$errorMSG = "";
 
 		/*------ Start: Check Validation --------*/
-		$name_validation_check = $obj->validation("Name", $POST["name"], 100);
+		$name_validation_check = $this->validation("Name", $POST["name"], 100);
 		$errorMSG .= $name_validation_check["errorMSG"];
 		$name_validation = $name_validation_check["validation"];
 		if($name_validation){$name = $POST['name'];}
 
-		$description_validation_check = $obj->validation("Description", $POST["description"], 200);
+		$description_validation_check = $this->validation("Description", $POST["description"], 200);
 		$errorMSG .= $description_validation_check["errorMSG"];
 		$description_validation = $description_validation_check["validation"];
 		if($description_validation){$description=$POST['description'];}
 		/*------ End: Check Validation --------*/
 
 		if($name_validation && $description_validation) $validation = true;
+		$validation_result = array("errorMSG" => $errorMSG, "validation" => $validation);
+		return $validation_result;
+	}
+
+	public function WordsValidation($POST){	
+		$word_validation = false;
+		$validation = false;
+		$errorMSG = "";
+
+		/*------ Start: Check Validation --------*/
+		$word_validation_check = $this->validation("Word", $POST["word"], 100);
+		$errorMSG .= $word_validation_check["errorMSG"];
+		$word_validation = $word_validation_check["validation"];
+		if($word_validation){$word = $POST['word'];}
+		/*------ End: Check Validation --------*/
+
+		if($word_validation) $validation = true;
 		$validation_result = array("errorMSG" => $errorMSG, "validation" => $validation);
 		return $validation_result;
 	}
@@ -235,24 +253,24 @@ class Database{
 // Create Connection
 $obj = new Database();
 
-echo $_GET["page"]; 
-echo "<pre>"; print_r($_GET); die;
+//echo $_GET["page"]; 
+//echo "<pre>"; print_r($_GET); die;
 
 
 if(isset($_GET["page"])){
 
 	/* ======= START: Insert and Update Operation ======== */
 	if(($_GET["page"]=="tag" || $_GET["page"]=="words") && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
-		// extract($_POST);
+		extract($_POST);
 
 		if (isset($_GET['page']) && isset($_GET['action'])) {
 			$page=$_GET['page'];
 			$action=$_GET['action'];
 
 			if ($page == 'tag') {
-				$result_validation = TagValidation($_POST);
+				$result_validation = $obj->TagValidation($_POST);
 			}elseif ($page == 'words') {
-				$result_validation = WordsValidation($_POST);
+				$result_validation = $obj->WordsValidation($_POST);
 			}
 		} else {
 			$data_result ="failed";
@@ -262,9 +280,27 @@ if(isset($_GET["page"])){
 		}
 
 		if($result_validation['validation']){
-			$slug = $name;
 			$tablename = $page;
-			$ColumnVal = array("name"=>$name,"slug"=>$slug,"description"=>$description);
+			if ($page == 'tag'){
+				$ColumnVal = array("name"=>$name,"slug"=>$name,"description"=>$description);
+			}
+			elseif ($page == 'words') {
+				$complete = (isset($complete)) ? 1 : 0;
+				$ColumnVal = array(
+								"word"=>$word,
+								"past"=>$past,
+								"participle"=>$participle,
+								"pos"=>$pos,
+								"spelling"=>$spelling,
+								"utterance"=>$utterance,
+								"mnemonics"=>$mnemonics,
+								"smeaning"=>$smeaning,
+								"lmeaning"=>$lmeaning,
+								"sentence"=>$sentence,
+								"complete"=>$complete,
+								"meaning_number"=>$meaning_number,
+							);
+			}
 
 			if($action=="update"){
 				$condition = array("id"=>$_POST['id']);

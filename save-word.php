@@ -36,7 +36,8 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
   $smeaning_value = $word[0]['smeaning'];
   $lmeaning_value = $word[0]['lmeaning'];
   $sentence_value = $word[0]['sentence'];
-  $meaning_number = $word[0]['meaning_number'];  
+  $meaning_number = $word[0]['meaning_number'];
+  $complete_value = $word[0]['complete']; 
 }
 ?>
 
@@ -79,7 +80,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="word" class="col-sm-3 col-form-label">Word: </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="word" placeholder="Enter Word" name="word" maxlength="100" value="<?php echo isset($word_value) ? $word_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="word" placeholder="Enter Word" name="word" maxlength="100" value="<?php echo isset($word_value) ? $word_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -88,7 +89,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="word" class="col-sm-3 col-form-label">Word(Past Form): </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="past" placeholder="Enter Past Form" name="past" maxlength="100" value="<?php echo isset($word_past_value) ? $word_past_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="past" placeholder="Enter Past Form" name="past" maxlength="100" value="<?php echo isset($word_past_value) ? $word_past_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -97,7 +98,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="word" class="col-sm-3 col-form-label">Word(Past participle Form): </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="participle" placeholder="Enter past participle Form" name="participle" maxlength="100" value="<?php echo isset($word_participle_value) ? $word_participle_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="participle" placeholder="Enter past participle Form" name="participle" maxlength="100" value="<?php echo isset($word_participle_value) ? $word_participle_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -106,7 +107,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="pos" class="col-sm-3 col-form-label">Parts of Speech: </label>
           <div class="col-sm-9">
-            <select class="form-select form-control" id="pos" name="pos" aria-label="Default select example">
+            <select class="form-select form-control input-field" id="pos" name="pos" aria-label="Default select example">
               <?php 
               foreach ($pos as $key => $value) {
                 if($pos_value == $value)
@@ -124,7 +125,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="spelling" class="col-sm-3 col-form-label">Spelling: </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="spelling" placeholder="Enter spelling" name="spelling" maxlength="100" value="<?php echo isset($spelling_value) ? $spelling_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="spelling" placeholder="Enter spelling" name="spelling" maxlength="100" value="<?php echo isset($spelling_value) ? $spelling_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -133,7 +134,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="utterance" class="col-sm-3 col-form-label">Utterance: </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="utterance" placeholder="Enter utterance" name="utterance" maxlength="100" value="<?php echo isset($utterance_value) ? $utterance_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="utterance" placeholder="Enter utterance" name="utterance" maxlength="100" value="<?php echo isset($utterance_value) ? $utterance_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -142,7 +143,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="mnemonics" class="col-sm-3 col-form-label">Mnemonics: </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="mnemonics" placeholder="Enter mnemonics" name="mnemonics" maxlength="100" value="<?php echo isset($mnemonics_value) ? $mnemonics_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="mnemonics" placeholder="Enter mnemonics" name="mnemonics" maxlength="100" value="<?php echo isset($mnemonics_value) ? $mnemonics_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -151,7 +152,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="smeaning" class="col-sm-3 col-form-label">Short Meaning: </label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="smeaning" placeholder="Enter short meaning" name="smeaning" maxlength="100" value="<?php echo isset($smeaning_value) ? $smeaning_value : ""; ?>" required>
+            <input type="text" class="form-control input-field" id="smeaning" placeholder="Enter short meaning" name="smeaning" maxlength="100" value="<?php echo isset($smeaning_value) ? $smeaning_value : ""; ?>" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -160,7 +161,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="lmeaning" class="col-sm-3 col-form-label">Long Meaning: </label>
           <div class="col-sm-9">
-            <textarea name="lmeaning" id="lmeaning" class="form-control" cols="30" rows="10" maxlength="200" required><?php echo isset($lmeaning_value) ? $lmeaning_value : ""; ?></textarea>
+            <textarea name="lmeaning" id="lmeaning" class="form-control input-field" cols="30" rows="10" maxlength="200" required><?php echo isset($lmeaning_value) ? $lmeaning_value : ""; ?></textarea>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -169,7 +170,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="sentence" class="col-sm-3 col-form-label">Sentence: </label>
           <div class="col-sm-9">
-            <textarea name="sentence" id="sentence" class="form-control" cols="30" rows="10" maxlength="200" required><?php echo isset($sentence_value) ? $sentence_value : ""; ?></textarea>
+            <textarea name="sentence" id="sentence" class="form-control input-field" cols="30" rows="10" maxlength="200" required><?php echo isset($sentence_value) ? $sentence_value : ""; ?></textarea>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -179,7 +180,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="sentence" class="col-sm-3 col-form-label">Is Complete?: </label>
           <div class="col-sm-9">
-            <input type="checkbox" class="form-check-input" id="complete" name="complete">
+            <input type="checkbox" class="form-check-input input-field" id="complete" name="complete" <?php echo ((int)$complete_value) ? "checked" : ""; ?>>
           </div>
         </div>
 
@@ -212,7 +213,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="meaning_number" class="col-sm-3 col-form-label">Number'th Meaning: </label>
           <div class="col-sm-9">
-            <select class="form-select form-control" id="meaning-number" name="meaning_number" aria-label="Default select example">
+            <select class="form-select form-control input-field" id="meaning-number" name="meaning_number" aria-label="Default select example">
               <?php 
               for ($i=1; $i<5  ; $i++) { 
                 if ($i==$meaning_number)
@@ -229,7 +230,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="tag" class="col-sm-3 col-form-label">Tags: </label>
           <div class="col-sm-9">
-          <select class="live-selectpicker form-select form-control" name="tags" id="tag" multiple data-live-search="true">
+          <select class="live-selectpicker form-select form-control input-field" name="tags" id="tag" multiple data-live-search="true">
               <option value="Noun">Noun</option>
               <option value="Pronoun">Pronoun</option>
               <option value="Adjective">Adjective</option>
@@ -247,7 +248,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="synonyms" class="col-sm-3 col-form-label">Synonyms: </label>
           <div class="col-sm-9">
-          <select class="live-selectpicker form-select form-control" name="synonyms" id="synonyms" multiple data-live-search="true">
+          <select class="live-selectpicker form-select form-control input-field" name="synonyms" id="synonyms" multiple data-live-search="true">
               <option value="Noun">Noun</option>
               <option value="Pronoun">Pronoun</option>
               <option value="Adjective">Adjective</option>
@@ -265,7 +266,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="antonyms" class="col-sm-3 col-form-label">Antonyms: </label>
           <div class="col-sm-9">
-          <select class="live-selectpicker form-select form-control" name="antonyms" id="antonyms" multiple data-live-search="true">
+          <select class="live-selectpicker form-select form-control input-field" name="antonyms" id="antonyms" multiple data-live-search="true">
               <option value="Noun">Noun</option>
               <option value="Pronoun">Pronoun</option>
               <option value="Adjective">Adjective</option>

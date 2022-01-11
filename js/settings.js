@@ -50,20 +50,18 @@ $(document).ready(function() {
             $("#operation-result").removeClass("alert-success");
             $("#operation-result").addClass("alert-danger");
             $("#operation-result").html("<strong>"+data.result+"!</strong> <i>"+data.message+"</i> because of <b>"+data.msg+"</b>");
-            toastr.error('Tag not '+type+'!', 'Tag!')
+            toastr.error(page+' not '+type+'!', ''+page+'!')
           }else{
             $("#operation-result").css("display", "block");
             $("#operation-result").removeClass("alert-danger");
             $("#operation-result").addClass("alert-success");
             $("#operation-result").html("<strong>"+data.result+"!</strong> <i>"+data.message+"</i> because of <b>"+data.msg+"</b>");
-            toastr.success('Tag successfully '+type+'!', 'Tag');
+            toastr.success(page+' successfully '+type+'!', ''+page+'');
           }
 
           if(type=="Add"){
             $("#save-form").removeClass("was-validated");
             $('.input-field').val("");
-            /*$('#name').val("");
-            $('#description').val("");*/
           }
         },
         fail: function(xhr, textStatus, errorThrown){
@@ -82,8 +80,8 @@ $(document).ready(function() {
 
  
 
-function deleteData(id,page) {
-  //console.log("Delete id: ",id);
+function deleteData(id) {
+  var page = $("#delete-data").data("page");
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',

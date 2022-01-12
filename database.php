@@ -2,10 +2,10 @@
 class Database{
 
 	public $hostname = "localhost";
-	public $username = "root";
-	//public $username = "pmauser";
-	public $passowrd = "";
-	//public $passowrd = "123456";
+	//public $username = "root";
+	public $username = "pmauser";
+	//public $passowrd = "";
+	public $passowrd = "123456";
 	public $database = "vocabulary";
 	public $connection;
 	public $message = array(); 
@@ -84,7 +84,8 @@ class Database{
 
 		//Perform Insert operation
 		if($this->connection->query("INSERT INTO $tblname ($keysString) VALUES ($StValues)") === TRUE){
-			$this->message['msg'] =  "New record has been inserted successfully!";
+			$this->message['msg'] =  "New record has been inserted successfully into the ".$tblname;
+			$this->message['insert_id'] = $this->connection->insert_id;
 			$this->message['return'] = true;
 			return $this->message;
 		}else{

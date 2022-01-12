@@ -20,7 +20,7 @@ while(! feof($file))
         echo $s++." = ".$present." = ".$past." = ".$participle."<br>";
         
         // fetch($table, array $columns, array $condition)
-        $check = $obj->fetch("words", array("word"), array("word"=>$present));
+        $check = $obj->fetch("words", array("word"), array("word"=>$present, "past"=>$past, "participle"=>$participle));
         
         // Condition to check word is exists
         if(!empty($check)){

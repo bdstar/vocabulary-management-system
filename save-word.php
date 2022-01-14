@@ -37,7 +37,7 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
   $lmeaning_value = $word[0]['lmeaning'];
   $sentence_value = $word[0]['sentence'];
   $meaning_number = $word[0]['meaning_number'];
-  $complete_value = $word[0]['complete']; 
+  $complete_value = (int)($word[0]['complete']); 
 }
 ?>
 
@@ -180,7 +180,7 @@ complete          complete              complete
         <div class="form-group row">
           <label for="sentence" class="col-sm-3 col-form-label">Is Complete?: </label>
           <div class="col-sm-9">
-            <input type="checkbox" class="form-check-input input-field" id="complete" name="complete" <?php echo ((int)$complete_value) ? "checked" : ""; ?>>
+            <input type="checkbox" class="form-check-input input-field" id="complete" name="complete" <?php echo (isset($complete_value)) ? "checked" : ""; ?>>
           </div>
         </div>
 

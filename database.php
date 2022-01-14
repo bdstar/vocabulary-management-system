@@ -172,6 +172,22 @@ class Database{
 		}
 	}
 
+	# Perform SQL operations
+	public function execution($sql){
+		if (mysqli_connect_errno()) {
+			$this->message['msg'] = "Failed to connect to MySQL: " . mysqli_connect_error();
+			$this->message['return'] = false;
+			return $this->message;
+		}
+
+		$result=$this->connection->query("$sql");
+	
+		if($this->connection->errno){
+			die("Fail Select ".$this->connection->error);
+		}
+
+		return $result->fetch_all(MYSQLI_ASSOC);
+	}//End of function execution
 
 	public function validation($fieldname, $fieldvalue, $fieldlength){
 		$fieldvalue = trim($fieldvalue);
@@ -181,12 +197,12 @@ class Database{
 			$name_validation = false;
 		}
 		else{
-			if(!preg_match("/^[a-zA-Z]([\w -]*[a-zA-Z])?$/i", $fieldvalue)){
-				$errorMSG .= "<li>".$fieldname." only allow alphanumeric, hyphen, underscore and space</<li>"; 
+			if(!preg_match("/^[a-zA-Z]([\w -.,]*[a-zA-Z])?$/i", $fieldvalue)){
+				$errorMSG .= "<li>".$fieldname." only allow alphanumeric, hyphen, dot, comma, underscore and space</<li>"; 
 				$name_validation = false;
 			}
 			else {
-				if(strlen($fieldvalue)>100){
+				if(strlen($fieldvalue)>$fieldlength){
 					$errorMSG .= "<li>".$fieldname." must be less than ".$fieldlength." characters</<li>"; 
 					$name_validation = false;
 				}
@@ -211,7 +227,7 @@ class Database{
 		$name_validation = $name_validation_check["validation"];
 		if($name_validation){$name = $POST['name'];}
 
-		$description_validation_check = $this->validation("Description", $POST["description"], 200);
+		$description_validation_check = $this->validation("Description", $POST["description"], 1000);
 		$errorMSG .= $description_validation_check["errorMSG"];
 		$description_validation = $description_validation_check["validation"];
 		if($description_validation){$description=$POST['description'];}
@@ -263,6 +279,7 @@ if(isset($_GET["page"])){
 	/* ======= START: Insert and Update Operation ======== */
 	if(($_GET["page"]=="tag" || $_GET["page"]=="words") && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
 		extract($_POST);
+		$errorMSG = "";
 
 		if (isset($_GET['page']) && isset($_GET['action'])) {
 			$page=$_GET['page'];
@@ -321,7 +338,7 @@ if(isset($_GET["page"])){
 			}
 		}else{
 			$data_result ="failed";
-			$data_msg = "<ul>".$errorMSG."</ul>";
+			$data_msg = "<ul>".$result_validation['errorMSG']."</ul>";
 			$data_message = $page." unable to ".$action;
 		}
 		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]);
@@ -410,6 +427,43 @@ if(isset($_GET["page"])){
 		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]);	
 	}
 	/* ======= END: Delete Tag ======== */
+
+
+	//page=words&action=complete&id='+id
+	/* ======= START: Word Memorize check ======== */
+	if($_GET["page"]=="words" && $_GET["action"]=="complete") {
+		$page=$_GET['page'];
+		$action=$_GET['action'];
+		$id=$_GET['id'];
+		$complete = ($_GET['complete'])?$_GET['complete']:0;
+		//echo "complete=".$complete." | id=".$id." | action=".$action." | page=".$page; die;
+
+		$data_result ="failed";
+		$data_msg = "";
+		$data_message = "";
+
+		$tablename = $page;
+		$condition = array("id"=>$id);
+		$ColumnVal = array("complete"=>$complete);
+		$dbreturn = $obj->update($tablename, $ColumnVal, $condition);
+		
+		if($dbreturn["return"]){
+			$data_result = "success";
+			$data_msg = $dbreturn['msg'];
+			$data_message = $page." Successfully ".$action;
+		}else{
+			$data_result ="failed";
+			$data_msg = $dbreturn['msg'];
+			$data_message = $page." unable to ".$action;
+		}
+		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]);	
+	}
+	/* ======= END: Word Memorize check ======== */
+
+
+
+
+
 }
 /*
 // Assign table name

@@ -31,7 +31,10 @@
         <a class="nav-link" href="tags.php"><i class="fa fa-tags" aria-hidden="true"></i> Tags</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="add-word.php"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Word</a>
+        <a class="nav-link" href="save-word.php"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Word</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="paragraph.php"><i class="fa fa-address-card-o" aria-hidden="true"></i> Passage</a>
       </li>    
     </ul>
   </div>  

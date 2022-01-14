@@ -64,6 +64,22 @@ CREATE TABLE `tag` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `paragraph` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `description` varchar(20000) DEFAULT NULL,
+  `iframe` varchar(1000) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `paragraph`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `paragraph_slug` (`slug`);
+
+  ALTER TABLE `paragraph`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- Dumping data for table `tag`
 --

@@ -127,6 +127,101 @@ function deleteData(id) {
 
 
 
+function completeMemorized(id) {
+  var complete = 0;
+  var title = 'Are you Memorized it?';
+  var text = "Make sure you are confident!";
+  var confirmBtnText = 'Yes, memorized it!';
+  var swalBootstrapBtnTitle = 'Memorized!';
+  var swalBootstrapBtnDesc = 'Iv been memorized this word.';
+  var swalBootstrapBtnAlert = 'success';
+  // (complete) ? $("#is-complete-"+id).prop('checked', true) : $("#is-complete-"+id).prop('checked', false)
+
+  if ($("#is-complete-"+id).is(':checked')) {
+    complete = 1;
+    //console.log("Checkbox is checked.");
+    title = 'Are you Memorized it?';
+    text = "Make sure you are confident!";
+    confirmBtnText = 'Yes, memorized it!';
+    swalBootstrapBtnTitle = 'Memorized!';
+    swalBootstrapBtnDesc = 'Iv been memorized this word.';
+    swalBootstrapBtnAlert = 'success';
+  }else{
+    complete = 0;
+    //console.log("Checkbox is unchecked.");
+    title = 'Are you Forget it?';
+    text = "Make sure you are confirmed!";
+    confirmBtnText = 'Yes, forget it!';
+    swalBootstrapBtnTitle = 'Forget!';
+    swalBootstrapBtnDesc = 'Iv been forgot this word.';
+    swalBootstrapBtnAlert = 'danger';
+  }
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+  
+  swalWithBootstrapButtons.fire({
+    title: title,
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: confirmBtnText,
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true,
+    preConfirm: (login) => {
+      return fetch('database.php?page=words&action=complete&id='+id+'&complete='+complete)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText)
+          }
+          return response.json()
+        })
+        .catch(error => {
+          Swal.showValidationMessage(
+            `Request failed: ${error}`
+          )
+        })
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(swalBootstrapBtnTitle, swalBootstrapBtnDesc,swalBootstrapBtnAlert)
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire('Cancelled', 'Your have canceled this operation', 'error')      
+    }
+  })
+}
+
+
+
+
+
+$(document).ready(function() {
+  $('#tag-word').DataTable( {
+      responsive: {
+          details: {
+              display: $.fn.dataTable.Responsive.display.modal( {
+                  header: function ( row ) {
+                      var data = row.data();
+                      return 'Word('+data[0]+'): '+data[1];
+                  }
+              } ),
+              renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                  tableClass: 'table'
+              } )
+          }
+      }
+  } );
+} );
+
 
 
 

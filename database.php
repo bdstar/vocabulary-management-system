@@ -255,6 +255,36 @@ class Database{
 		return $validation_result;
 	}
 
+
+	public function PassageChecker($str){
+		$count = 0;
+		$memorize = 0;
+		$accuracy = 0;
+		$string = "";
+		$errorMSG = "";
+		$description = explode(" ",$str); 
+
+		foreach ($description as $key => $value) {
+			$mvalue = str_replace(array('\'', '"'), '', $value); 
+			$words = $this->fetch("words", array(), array("word"=>$mvalue));
+
+			if(!empty($words)){
+				if($words[0]['complete']){
+					$class = "memorized"; $memorize++;
+				}else{
+					$class = "unmemorized";
+				}
+				$string .= "<a href='save-word.php?action=view&id=".$words[0]['id']."' class='word-class ".$class."' target='_blank'>".$value."</a> ";
+				$count++;
+			}else{
+				$string .= $value." ";
+			}
+		}
+		$accuracy = round(($memorize * 100)/$count);
+		$result = array("errorMSG" => $errorMSG, "count" => $count, "memorize" => $memorize, "accuracy" => $accuracy, "string" => $string);
+		return $result;
+	}
+
 	//Call destructor function 
 	public function __destruct() {
 		if($this->connection){

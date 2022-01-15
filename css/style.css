@@ -1,8 +1,10 @@
 .word-class{
     font-weight: bold;
-    color: green;
     text-decoration: underline;
 }
+
+.memorized{ color: green; }
+.unmemorized{ color: red; }
 
 .fakeimg {
     height: 200px;

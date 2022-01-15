@@ -14,6 +14,9 @@
                 <tr>
                     <th>SN</th>
                     <th>Title</th>
+                    <th>Count</th>
+                    <th>Memorize</th>
+                    <th>Accuracy</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>

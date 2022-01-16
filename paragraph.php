@@ -32,6 +32,9 @@
                         <tr>
                             <td>'.$sn++.'</td>
                             <td>'.$paragraph['name'].'</td>
+                            <td>'.$paragraph['count'].'</td>
+                            <td>'.$paragraph['memorize'].'</td>
+                            <td>'.$paragraph['accuracy'].'</td>
                             <td>'.$paragraph['updated_at'].'</td>
                             <td class="pull-right">
                                 <a href="save-paragraph.php?action=update&id='.$paragraph['id'].'" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

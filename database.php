@@ -256,6 +256,24 @@ class Database{
 	}
 
 
+
+	public function ParagraphValidation($POST){	
+		$name_validation = false;
+		$validation = false;
+		$errorMSG = "";
+
+		/*------ Start: Check Validation --------*/
+		$name_validation_check = $this->validation("Name", $POST["name"], 100);
+		$errorMSG .= $name_validation_check["errorMSG"];
+		$name_validation = $name_validation_check["validation"];
+		if($name_validation){$name = $POST['name'];}
+		/*------ End: Check Validation --------*/
+
+		if($name_validation) $validation = true;
+		$validation_result = array("errorMSG" => $errorMSG, "validation" => $validation);
+		return $validation_result;
+	}
+
 	public function PassageChecker($str){
 		$count = 0;
 		$memorize = 0;
@@ -307,7 +325,7 @@ $obj = new Database();
 if(isset($_GET["page"])){
 
 	/* ======= START: Insert and Update Operation ======== */
-	if(($_GET["page"]=="tag" || $_GET["page"]=="words") && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
+	if(($_GET["page"]=="tag" || $_GET["page"]=="words" || $_GET["page"]=="paragraph") && ($_GET["action"]=="update" || $_GET["action"]=="insert")) {
 		extract($_POST);
 		$errorMSG = "";
 
@@ -319,6 +337,8 @@ if(isset($_GET["page"])){
 				$result_validation = $obj->TagValidation($_POST);
 			}elseif ($page == 'words') {
 				$result_validation = $obj->WordsValidation($_POST);
+			}elseif ($page == 'paragraph') {
+				$result_validation = $obj->ParagraphValidation($_POST);
 			}
 		} else {
 			$data_result ="failed";
@@ -348,6 +368,8 @@ if(isset($_GET["page"])){
 								"complete"=>$complete,
 								"meaning_number"=>$meaning_number,
 							);
+			}elseif ($page == 'paragraph') {
+				$ColumnVal = array("name"=>addslashes($name),"slug"=>addslashes($name),"description"=>addslashes($description),"iframe"=>addslashes($iframe),"count"=>$count,"memorize"=>$memorize,"accuracy"=>$accuracy);
 			}
 
 			if($action=="update"){
@@ -436,7 +458,7 @@ if(isset($_GET["page"])){
 
 
 	/* ======= START: Delete Tag ======== */
-	if(($_GET["page"]=="tag" || $_GET["page"]=="words") && $_GET["action"]=="delete") {
+	if(($_GET["page"]=="tag" || $_GET["page"]=="words" || $_GET["page"]=="paragraph") && $_GET["action"]=="delete") {
 		$page=$_GET['page'];
 		$action=$_GET['action'];
 		$id=$_GET['id'];

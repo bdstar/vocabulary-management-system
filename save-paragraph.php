@@ -18,6 +18,8 @@ if(!strcmp($_GET['action'],'update') || !strcmp($_GET['action'],'view')){
   $count_value = $paragraph[0]['count'];
   $memorize_value = $paragraph[0]['memorize'];
   $accuracy_value = $paragraph[0]['accuracy'];  
+
+  $checker = $obj->PassageChecker($paragraph[0]['description']);
 }
 ?>
 
@@ -81,7 +83,7 @@ paragraph
         <div class="form-group row">
           <label for="count" class="col-sm-2 col-form-label">Word Count: </label>
           <div class="col-sm-10">
-            <input type="text" class="form-control input-field" id="count" name="count" maxlength="10" value="<?php echo isset($count_value) ? $count_value : ""; ?>" readonly>
+            <input type="text" class="form-control input-field" id="count" name="count" maxlength="10" value="<?php echo isset($checker['count']) ? $checker['count'] : 0; ?>" readonly>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
@@ -90,16 +92,16 @@ paragraph
         <div class="form-group row">
           <label for="memorize" class="col-sm-2 col-form-label">Memorized: </label>
           <div class="col-sm-10">
-            <input type="text" class="form-control input-field" id="memorize" name="memorize" maxlength="10" value="<?php echo isset($memorize_value) ? $memorize_value : ""; ?>" readonly>
+            <input type="text" class="form-control input-field" id="memorize" name="memorize" maxlength="10" value="<?php echo isset($checker['memorize']) ? $checker['memorize'] : 0; ?>" readonly>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>
         </div>
 
         <div class="form-group row">
-          <label for="accuracy" class="col-sm-2 col-form-label">Accuracy: </label>
+          <label for="accuracy" class="col-sm-2 col-form-label">Accuracy(%): </label>
           <div class="col-sm-10">
-            <input type="text" class="form-control input-field" id="accuracy" name="accuracy" maxlength="10" value="<?php echo isset($accuracy_value) ? $accuracy_value : ""; ?>" readonly>
+            <input type="text" class="form-control input-field" id="accuracy" name="accuracy" maxlength="10" value="<?php echo isset($checker['accuracy']) ? $checker['accuracy'] : 0; ?>" readonly>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
           </div>

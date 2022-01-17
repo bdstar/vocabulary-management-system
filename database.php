@@ -2,10 +2,10 @@
 class Database{
 
 	public $hostname = "localhost";
-	public $username = "root";
-	//public $username = "pmauser";
-	public $passowrd = "";
-	//public $passowrd = "123456";
+	//public $username = "root";
+	public $username = "pmauser";
+	//public $passowrd = "";
+	public $passowrd = "123456";
 	public $database = "vocabulary";
 	public $connection;
 	public $message = array(); 
@@ -292,7 +292,8 @@ class Database{
 				}else{
 					$class = "unmemorized";
 				}
-				$string .= "<a href='save-word.php?action=view&id=".$words[0]['id']."' class='word-class ".$class."' target='_blank'>".$value."</a> ";
+				// save-word.php?action=view&id=".$words[0]['id']."
+				$string .= "<a href='javascript:void(0)' data-id=".$words[0]['id']." class='word-class ".$class."'>".$value."</a> ";
 				$count++;
 			}else{
 				$string .= $value." ";

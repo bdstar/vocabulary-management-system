@@ -224,6 +224,13 @@ $(document).ready(function() {
 
 
 
+$(document).ready(function () {
+  $('.word-class').on("click", function () {
+    var id = $(this).data("id");
+    console.log("id=",id);
+    $('#wordModal').modal('show');
+  });
+});
 
 
 

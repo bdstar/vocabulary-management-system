@@ -2,10 +2,10 @@
 class Database{
 
 	public $hostname = "localhost";
-	//public $username = "root";
-	public $username = "pmauser";
-	//public $passowrd = "";
-	public $passowrd = "123456";
+	public $username = "root";
+	//public $username = "pmauser";
+	public $passowrd = "";
+	//public $passowrd = "123456";
 	public $database = "vocabulary";
 	public $connection;
 	public $message = array(); 

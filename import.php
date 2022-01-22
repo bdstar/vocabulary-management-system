@@ -1,8 +1,11 @@
-<?php require_once "database.php";
+<?php 
+require_once "database.php";
+require_once "data/excel_reader/excel_reader.php";
 
+/*------------START: Right from of Verb ----------------------*/
+/*
 $filename = isset($argv[1]) ? $argv[1] : "data/verbs.csv";
 $file = fopen($filename,"r");
-
 $s = 0;
 $same = array();
 
@@ -39,20 +42,89 @@ while(! feof($file))
             echo "<li>".$dbreturn['msg']."</li></ul>";
         }
     }
+}
+fclose($file);
+*/
+/*------------END: Right from of Verb ----------------------*/
 
-    /*if($present==$past && $present==$participle){
-        $same[$s]['present'] = $present;
-        $same[$s]['past'] = $past;
-        $same[$s]['participle'] = $participle;
-        $s++;
-    }
-    //elseif ((substr($past, -2)=='ed')) {
-    elseif ((substr($past, -2)=='ed') && (substr($past, 0, -2) == $present) && (substr($participle, 0, -2) == $present)) {
-        //echo $present." = ".$past." = ".$participle."<br>";
+
+/*------------ START: Major Test Vocabulary ----------------------*/
+// creates an object instance of the class, and read the excel file data
+$excel = new PhpExcelReader;
+$excel->read('data/majortests.xls');
+function sheetData($sheet) {
+    //echo "<pre>"; print_r($sheet); echo "</pre>"; die;
+    /*$i = 1;
+    foreach($sheet['cells'] as $key => $value){
+        echo "<br>".$i++."=$value[1]=$value[2]<br><ul>";
+
+        $tablename = "words";
+        $ColumnVal = array("word"=>$value[1],"emeaning"=>$value[2]);
+        $dbreturn = $obj->insert($tablename, $ColumnVal);
+        echo "<li>".$dbreturn['msg']."</li>";
+
+        $tablename = "tag_word";
+        $tag_id = 13;
+        $ColumnVal = array("tag_id"=>$tag_id,"word_id"=>$dbreturn['insert_id']);
+        $dbreturn = $obj->insert($tablename, $ColumnVal);
+        echo "<li>".$dbreturn['msg']."</li></ul>";
+
     }*/
+    /*
+    Array
+    (
+        [maxrow] => 0
+        [maxcol] => 0
+        [numRows] => 101
+        [numCols] => 2
+        [cells] => Array
+            (
+                [1] => Array
+                    (
+                        [1] => Abhor
+                        [2] => hate
+                    )
+    */
+  /*$re = '<table>';     // starts html table
+  $x = 1;
+  while($x <= $sheet['numRows']) {
+    $re .= "<tr>\n";
+    $y = 1;
+    while($y <= $sheet['numCols']) {
+      $cell = isset($sheet['cells'][$x][$y]) ? $sheet['cells'][$x][$y] : '';
+      $re .= " <td>$cell</td>\n";  
+      $y++;
+    }  
+    $re .= "</tr>\n";
+    $x++;
+  }
+  return $re .'</table>'; */    // ends and returns the html table
 }
 
-//echo "<pre>"; print_r($same); echo "</pre>";
+$nr_sheets = count($excel->sheets);       // gets the number of sheets
+$excel_data = '';              // to store the the html tables with data of each sheet
 
-fclose($file);
+// traverses the number of sheets and sets html table with each sheet data in $excel_data
+for($i=0; $i<$nr_sheets; $i++) {
+    //$excel_data .= '<h4>Sheet '. ($i + 1) .' (<em>'. $excel->boundsheets[$i]['name'] .'</em>)</h4>'. sheetData($excel->sheets[$i]) .'<br/>';  
+    $sheet = $excel->sheets[$i];
+    $i = 1;
+    foreach($sheet['cells'] as $key => $value){
+        echo "<br>".$i++."=$value[1]=$value[2]<br><ul>";
+    
+        $tablename = "words";
+        $ColumnVal = array("word"=>addslashes($value[1]),"emeaning"=>addslashes($value[2]));
+        $dbreturn = $obj->insert($tablename, $ColumnVal);
+        echo "<li>".$dbreturn['msg']."</li>";
+    
+        $tablename = "tag_word";
+        $tag_id = 13;
+        $ColumnVal = array("tag_id"=>$tag_id,"word_id"=>$dbreturn['insert_id']);
+        $dbreturn = $obj->insert($tablename, $ColumnVal);
+        echo "<li>".$dbreturn['msg']."</li></ul>";
+    }
+}
+
+//echo $excel_data;
+/*------------ END: Major Test Vocabulary ------------------------*/
 ?>

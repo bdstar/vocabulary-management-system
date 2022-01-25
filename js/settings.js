@@ -228,7 +228,98 @@ $(document).ready(function () {
   $('.word-class').on("click", function () {
     var id = $(this).data("id");
     console.log("id=",id);
-    $('#wordModal').modal('show');
+
+    var page = "words";
+    var url = 'database.php?id='+id+'&page=' + page + '&action=viewword';
+    $.ajax({
+      type: 'post',
+      dataType: "json",
+      url: url,
+      data: $('form').serialize(),
+      success: function (data) {
+        if (data.result == "failed") {
+          //$("#operation-result").css("display", "block");
+          //$("#operation-result").removeClass("alert-success");
+          //$("#operation-result").addClass("alert-danger");
+          //$("#operation-result").html("<strong>" + data.result + "!</strong> <i>" + data.message + "</i> because of <b>" + data.msg + "</b>");
+          toastr.error(page + ' Data Not Found!')
+        } else {
+          //console.log(data.data[0].word);
+          $(".modal-word").html(data.data[0].word);
+          $("#wordModal").data('modal',3);
+          $(".modal-meaning_number").html(data.data[0].meaning_number);
+          (data.data[0].pos)? $("#modal-pos").html("("+data.data[0].pos+")"):"";
+
+          //Start: modal-spelling-utterance
+          let c = "";
+          let a = data.data[0].spelling;
+          let b = data.data[0].utterance;
+          let f = 0;
+
+          if (a || b){
+            c += "(";
+            if (a){c += (a); f=1;}
+            if(b){if(f){c +="/";} c += b; }
+            c += ")";
+          }
+          $("#modal-spelling-utterance").html(c);
+          //End: modal-spelling-utterance
+
+          //let smeaning = ((data.data[0].smeaning) ? (": "+data.data[0].smeaning) : "");
+          $("#modal-smeaning").html(((data.data[0].smeaning) ? (": " + data.data[0].smeaning) : ""));
+          $("#modal-emeaning").html(((data.data[0].emeaning) ? (": " + data.data[0].emeaning) : ""));
+          $("#modal-lmeaning").html(((data.data[0].lmeaning) ? (": " + data.data[0].lmeaning) : ""));
+          $("#modal-mnemonics").html(((data.data[0].mnemonics) ? (": " + data.data[0].mnemonics) : ""));
+          $("#modal-sentence").html(((data.data[0].sentence) ? (": " + data.data[0].sentence) : ""));
+          if (data.data[0].picture){
+            $('#modal-picture').attr('src', (data.data[0].picture));
+            $('#modal-picture').hide();
+          }
+          if (data.data[0].pos == "Verb" && (data.data[0].past || data.data[0].participle)){
+            $("#modal-past").html(((data.data[0].past) ? (data.data[0].past) : ""));
+            $("#modal-participle").html(((data.data[0].participle) ? (data.data[0].participle) : ""));
+          }else{
+            $('#modal-fov').hide();
+          }
+
+          if (data.data[0].complete == 1) {
+            $("#modal-complete").attr("checked", true);
+          }else{
+            $("#modal-complete").attr("checked", false);
+          }
+          /*{
+            "id": "377",
+            -"word": "happen",
+            -"pos": "Verb",
+            -"spelling": null,
+            -"utterance": null,
+            -"mnemonics": null,
+            -"smeaning": null,
+            -"lmeaning": null,
+            -"emeaning": null,
+            -"sentence": null,
+            -"picture": null,
+            -"meaning_number": "1",
+            -"past": "happened",
+            -"participle": "happened",
+            -"complete": "1",
+            "created_at": "2022-01-12 21:27:34",
+            "updated_at": "2022-01-12 21:27:34"
+          }*/
+          //$("#operation-result").css("display", "block");
+          //$("#operation-result").removeClass("alert-danger");
+          //$("#operation-result").addClass("alert-success");
+          //$("#operation-result").html("<strong>" + data.result + "!</strong> <i>" + data.message + "</i> because of <b>" + data.msg + "</b>");
+          //toastr.success(page + ' successfully ' + type + '!', '' + page + '');
+          $('#wordModal').modal('show');
+        }
+      },
+      fail: function (xhr, textStatus, errorThrown) {
+        toastr.error('Request Failed.', 'Failed!')
+      }
+    });
+
+    //$('#wordModal').modal('show');
   });
 });
 

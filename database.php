@@ -2,10 +2,10 @@
 class Database{
 
 	public $hostname = "localhost";
-	public $username = "root";
-	//public $username = "pmauser";
-	public $passowrd = "";
-	//public $passowrd = "123456";
+	//public $username = "root";
+	public $username = "pmauser";
+	//public $passowrd = "";
+	public $passowrd = "123456";
 	public $database = "vocabulary";
 	public $connection;
 	public $message = array(); 
@@ -512,6 +512,40 @@ if(isset($_GET["page"])){
 		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message]);	
 	}
 	/* ======= END: Word Memorize check ======== */
+
+
+
+
+	//database.php?id=1 & page=paragraph & action=viewword
+	/* ======= START: Click to Open Word Modal ======== */
+	if($_GET["page"]=="words" && $_GET["action"]=="viewword") {
+		$page=$_GET['page'];
+		$action=$_GET['action'];
+		$id=$_GET['id'];
+
+		$data_result ="failed";
+		$data_msg = "";
+		$data_message = "";
+
+		$table = $page;
+		$condition = array("id"=>$id);
+		$columns = array();
+		$dbreturn = $obj->fetch($table, $columns, $condition);
+		
+		if($dbreturn){
+			$data_result = "success";
+			$data_msg = $dbreturn['msg'];
+			$data_message = $page." Successfully ".$action;
+		}else{
+			$data_result ="failed";
+			$data_msg = $dbreturn['msg'];
+			$data_message = $page." unable to ".$action;
+		}
+		echo json_encode(['result'=>$data_result, 'msg'=>$data_msg, 'message'=>$data_message, 'data'=>$dbreturn]);
+	}
+	/* ======= END: Click to Open Word Modal ======== */
+
+
 
 
 

@@ -39,20 +39,20 @@
 
 
 <!--
-  -`id` int(11) NOT NULL AUTO_INCREMENT,
-  -`word` varchar(200) NOT NULL,
-  -`pos` enum('Noun','Pronoun','Adjective','Verb','Adverb','Preposition','Conjunction','Interjection') NOT NULL,
-  -`spelling` varchar(300) DEFAULT NULL,
-  -`utterance` varchar(300) DEFAULT NULL,
-  -`mnemonics` varchar(500) DEFAULT NULL,
-  -`smeaning` varchar(300) DEFAULT NULL,
-  -`lmeaning` varchar(1000) DEFAULT NULL,
-  -`sentence` varchar(1000) DEFAULT NULL,
-  -`picture` varchar(200) DEFAULT NULL,
-  -`meaning_number` int(11) NOT NULL DEFAULT '1',
-  -`past` varchar(100) DEFAULT NULL,
-  -`participle` varchar(100) DEFAULT NULL,
-  -`complete` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `word` varchar(200) NOT NULL,
+  `pos` enum('Noun','Pronoun','Adjective','Verb','Adverb','Preposition','Conjunction','Interjection') NOT NULL,
+  `spelling` varchar(300) DEFAULT NULL,
+  `utterance` varchar(300) DEFAULT NULL,
+  `mnemonics` varchar(500) DEFAULT NULL,
+  `smeaning` varchar(300) DEFAULT NULL,
+  `lmeaning` varchar(1000) DEFAULT NULL,
+  `sentence` varchar(1000) DEFAULT NULL,
+  `picture` varchar(200) DEFAULT NULL,
+  `meaning_number` int(11) NOT NULL DEFAULT '1',
+  `past` varchar(100) DEFAULT NULL,
+  `participle` varchar(100) DEFAULT NULL,
+  `complete` int(11) NOT NULL DEFAULT '0',
 -->
 
 
@@ -62,35 +62,37 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Word</h4>
+                <button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
+                <h4 class="modal-word text-center">Word</h4>
             </div>
             <div class="modal-body">
-                <p><strong>Word</strong>(<i>verb</i>)[<i>spelling/utterance</i>] = smeaning</p>
-                <p>lmeaning</p>
-                <p>mnemonics</p>
-                <p>sentence</p>
-                <?php
-                    $meaning_number = 1;
-                    if($meaning_number>1) echo $meaning_number."<sup>th</sup>"; 
-                    if(isset($pos) && $pos=="v"){
-                ?>
-                <img src="" alt="" srcset="">
-                <table>
+                <p>
+                    <strong class="modal-word">Word</strong>
+                    <sup id="modal-meaning_number">1</sup>
+                    <i id="modal-pos">(Noun)</i>
+                    <i id="modal-spelling-utterance">[spelling/utterance]</i>
+                    <span id="modal-smeaning">: smeaning</span>
+                </p>
+                <p id="modal-emeaning">emeaning</p>
+                <p id="modal-lmeaning">lmeaning</p>
+                <p id="modal-mnemonics">mnemonics</p>
+                <p id="modal-sentence">sentence</p>
+                <img id="modal-picture" src="" alt="" srcset="">
+                <table class="table table-bordered" id="modal-fov">
                     <tr>
                         <th>Present</th>
                         <th>Past</th>
                         <th>Past Participle</th>
                     </tr>
                     <tr>
-                        <td>word</td>
-                        <td>past</td>
-                        <td>participle</td>
+                        <td class="modal-word">word</td>
+                        <td id="modal-past">past</td>
+                        <td id="modal-participle">participle</td>
                     </tr>
                 </table>
-                <?php } ?>
                 <p>
                     <strong>Momorized</strong>
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="" id="modal-complete" onclick=completeMemorized()>
                 </p>
             </div>
             <div class="modal-footer">

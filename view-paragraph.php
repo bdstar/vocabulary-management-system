@@ -62,6 +62,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <input type="hidden" id="modal-id" name="modal_id" value="0">
                 <button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
                 <h4 class="modal-word text-center">Word</h4>
             </div>
@@ -92,7 +93,7 @@
                 </table>
                 <p>
                     <strong>Momorized</strong>
-                    <input type="checkbox" name="" id="modal-complete" onclick=completeMemorized()>
+                    <input type="checkbox" name="" id="modal-complete" onclick=goMemorized()>
                 </p>
             </div>
             <div class="modal-footer">

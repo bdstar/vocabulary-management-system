@@ -125,6 +125,13 @@ function deleteData(id) {
   })
 }
 
+function goMemorized(){
+  var id = $("#wordModal").data("modal");
+  console.log("Modal=",id);
+  //id = $("#is-complete-" + id).val();
+  //console.log("Input=",id);
+  completeMemorized(id)
+}
 
 
 function completeMemorized(id) {
@@ -245,8 +252,9 @@ $(document).ready(function () {
           toastr.error(page + ' Data Not Found!')
         } else {
           //console.log(data.data[0].word);
+          $("#modal-id").val(data.data[0].id);
+          $("#wordModal").data('modal', data.data[0].id);
           $(".modal-word").html(data.data[0].word);
-          $("#wordModal").data('modal',3);
           $(".modal-meaning_number").html(data.data[0].meaning_number);
           (data.data[0].pos)? $("#modal-pos").html("("+data.data[0].pos+")"):"";
 
@@ -287,6 +295,11 @@ $(document).ready(function () {
           }else{
             $("#modal-complete").attr("checked", false);
           }
+
+          let checkboxid = "#is-complete-" + data.data[0].id;
+          $("#modal-complete").attr("id", checkboxid);
+          //$(idname).val(data.data[0].id);
+
           /*{
             "id": "377",
             -"word": "happen",

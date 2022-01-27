@@ -134,7 +134,7 @@ function goMemorized(){
 }
 
 
-function completeMemorized(id) {
+function completeMemorized(id,type=0) {
   var complete = 0;
   var title = 'Are you Memorized it?';
   var text = "Make sure you are confident!";
@@ -144,7 +144,11 @@ function completeMemorized(id) {
   var swalBootstrapBtnAlert = 'success';
   // (complete) ? $("#is-complete-"+id).prop('checked', true) : $("#is-complete-"+id).prop('checked', false)
 
-  if ($("#is-complete-"+id).is(':checked')) {
+  console.log("type: ",type);
+  let selector = (type) ? "#is-complete-" + id : "#modal-complete";
+  // if ($("#is-complete-"+id).is(':checked')) {
+  // if ($("#modal-complete").is(':checked')) {
+  if ($(selector).is(':checked')) {
     complete = 1;
     //console.log("Checkbox is checked.");
     title = 'Are you Memorized it?';
@@ -167,7 +171,7 @@ function completeMemorized(id) {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
+      cancelButton: 'btn btn-error'
     },
     buttonsStyling: false
   })
@@ -186,6 +190,26 @@ function completeMemorized(id) {
           if (!response.ok) {
             throw new Error(response.statusText)
           }
+
+          //let selector = "#word-class-"+id;
+          let selector = (type) ? "#is-complete-" + id : "#word-class-" + id;
+          console.log();
+          if (complete) {
+            if(type){
+              $(selector).attr("checked", true);
+            }else{
+              $(selector).removeClass("unmemorized");
+              $(selector).addClass("memorized");
+            }
+          } else {
+            if (type) {
+              $(selector).attr("checked", false);
+            } else {
+              $(selector).removeClass("memorized");
+              $(selector).addClass("unmemorized");
+            }
+          }
+
           return response.json()
         })
         .catch(error => {
@@ -296,8 +320,8 @@ $(document).ready(function () {
             $("#modal-complete").attr("checked", false);
           }
 
-          let checkboxid = "#is-complete-" + data.data[0].id;
-          $("#modal-complete").attr("id", checkboxid);
+          //let checkboxid = "#is-complete-" + data.data[0].id;
+          //$("#modal-complete").attr("id", checkboxid);
           //$(idname).val(data.data[0].id);
 
           /*{

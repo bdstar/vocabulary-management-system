@@ -72,7 +72,7 @@ SELECT COUNT(*) FROM words INNER JOIN tag_word ON tag_word.word_id = words.id WH
                             <td>".$s++."</td>
                             <td>".$word['word']."</td>
                             <td>
-                                <input type='checkbox' id='is-complete-$id' onclick='completeMemorized($id)' name='iscomplete' $checked>
+                                <input type='checkbox' id='is-complete-$id' onclick='completeMemorized($id,1)' name='iscomplete' $checked>
                             </td>
                             <td>".$word['pos']."</td>
                             <td>".$word['past']."</td>

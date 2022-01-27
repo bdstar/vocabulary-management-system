@@ -293,7 +293,7 @@ class Database{
 					$class = "unmemorized";
 				}
 				// save-word.php?action=view&id=".$words[0]['id']."
-				$string .= "<a href='javascript:void(0)' data-id=".$words[0]['id']." class='word-class ".$class."'>".$value."</a> ";
+				$string .= "<a href='javascript:void(0)' id='word-class-".$words[0]['id']."' data-id=".$words[0]['id']." class='word-class ".$class."'>".$value."</a> ";
 				$count++;
 			}else{
 				$string .= $value." ";
